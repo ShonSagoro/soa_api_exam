@@ -7,7 +7,7 @@ import { StudentResponse } from '../dtos/response/StudentResponse';
 export class UpdateStudentUseCases {
   constructor(readonly repository: StudentInterface) { }
 
-  async execuse(uuid: string, request: UpdateStudentRequest): Promise<BaseResponse> {
+  async execute(uuid: string, request: UpdateStudentRequest): Promise<BaseResponse> {
     let student = new Student(request.name, request.email);
     let result = await this.repository.update(uuid, student);
     if (result) {

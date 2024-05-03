@@ -5,7 +5,7 @@ import { TutorResponse } from "../dtos/response/TutorResponse";
 export class GetTutorByUUIDUseCases {
     constructor(readonly repository: TutorInterface) { }
 
-    async execuse(uuid: string): Promise<BaseResponse> {
+    async execute(uuid: string): Promise<BaseResponse> {
         let result = await this.repository.findByUUID(uuid);
         if (result) {
             let response = new TutorResponse(result.uuid, result.name, result.lastname, result.email, result.students);

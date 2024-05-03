@@ -5,7 +5,7 @@ import { SubjectResponse } from "../dtos/response/SubjectResponse";
 export class ListSubjectsUseCases {
     constructor(readonly repository: SubjectInterface) { }
 
-    async execuse(): Promise<BaseResponse> {
+    async execute(): Promise<BaseResponse> {
         let result = await this.repository.list();
         if (result) {
             let response = result.map(student => new SubjectResponse(student.uuid, student.name, student.description, student.students));

@@ -7,7 +7,7 @@ import { StudentResponse } from "../dtos/response/StudentResponse";
 export class CreateStudentUseCases {
   constructor(readonly repository: StudentInterface) {}
 
-  async execuse(request: CreateStudentRequest): Promise<BaseResponse> {
+  async execute(request: CreateStudentRequest): Promise<BaseResponse> {
     let student = new Student(request.name, request.email);
     let result = await this.repository.create(student);
     if(result){

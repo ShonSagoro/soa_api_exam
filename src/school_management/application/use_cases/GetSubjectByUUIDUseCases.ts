@@ -5,7 +5,7 @@ import { SubjectResponse } from "../dtos/response/SubjectResponse";
 export class GetSubjectByUUIDUseCases {
     constructor(readonly repository: SubjectInterface) { }
 
-    async execuse(uuid: string): Promise<BaseResponse> {
+    async execute(uuid: string): Promise<BaseResponse> {
         let result = await this.repository.findByUUID(uuid);
         if (result) {
             let response = new SubjectResponse(result.uuid, result.name, result.description, result.students);
