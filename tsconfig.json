@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "declaration": true,
+        "esModuleInterop": true,
+        "lib": [
+            "es2022"
+        ],
+        "module": "CommonJS", // Cambiado de "esnext" a "CommonJS"
+        "moduleResolution": "node",
+        "strict": true,
+        "target": "es2022",
+        "outDir": "./dist",
+  
+    },
+    "include": [
+        "src/**/*"
+    ]
+  }
+  
+  
+  
