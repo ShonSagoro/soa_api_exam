@@ -6,5 +6,5 @@ export interface TutorInterface {
     delete(uuid: string): Promise<void>;
     findByUUID(uuid: string): Promise<Tutor|null>;
     list(): Promise<Tutor[]|null>;
-    addStudentToTutor(uuidTutor: string, uuidStudent: string): Promise<Tutor|null>;    
+    addStudentToTutor(uuidTutor: string, uuidStudent: string): Promise<Tutor|null>;  //no usecase
 }

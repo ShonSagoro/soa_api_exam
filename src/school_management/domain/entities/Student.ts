@@ -7,11 +7,11 @@ export class Student{
     public tutor: string;
     public subjects: string[];
 
-    constructor(name: string, email: string, tutor: string){
+    constructor(name: string, email: string){
         this.uuid = uuidv4();
         this.name = name;
         this.email = email;
-        this.tutor = tutor;
+        this.tutor = "";
         this.subjects = [];
     }
 }

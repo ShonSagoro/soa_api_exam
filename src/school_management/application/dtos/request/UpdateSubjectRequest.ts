@@ -1,4 +1,4 @@
-export class UpdateStudentRequest{
+export class UpdateSubjectRequest{
     public name: string;
     public description: string;
 
