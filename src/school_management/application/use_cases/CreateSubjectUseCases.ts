@@ -7,7 +7,7 @@ import { SubjectResponse } from '../dtos/response/SubjectResponse';
 export class CreateSubjectUseCases {
   constructor(readonly repository: SubjectInterface) {}
 
-  async execuse(request: CreateSubjectRequest): Promise<BaseResponse> {
+  async execute(request: CreateSubjectRequest): Promise<BaseResponse> {
     let student = new Subject(request.name, request.description);
     let result = await this.repository.create(student);
     if(result){

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 
-import { DeleteStudentUseCases } from "../../application/use_cases/DeleteStudentUseCases";
 import { BaseResponse } from '../../application/dtos/response/BaseResponse';
 import { DeleteSubjectUseCases } from '../../application/use_cases/DeleteSubjectUseCases';
 

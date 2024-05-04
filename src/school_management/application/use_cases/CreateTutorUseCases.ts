@@ -7,7 +7,7 @@ import { TutorResponse } from "../dtos/response/TutorResponse";
 export class CreateTutorUseCases {
     constructor(readonly repository: TutorInterface) { }
 
-    async execuse(request: CreateTutorRequest): Promise<BaseResponse> {
+    async execute(request: CreateTutorRequest): Promise<BaseResponse> {
         let tutor = new Tutor(request.name, request.lastname, request.email);
         let result = await this.repository.create(tutor);
         if (result) {

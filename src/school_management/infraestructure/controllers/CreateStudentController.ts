@@ -1,4 +1,3 @@
-import { request } from 'http';
 import { Request, Response } from 'express';
 
 import { BaseResponse } from '../../application/dtos/response/BaseResponse';
