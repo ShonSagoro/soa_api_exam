@@ -11,7 +11,7 @@ export class CreateStudentUseCases {
     let student = new Student(request.name, request.email, request.lastname);
     let result = await this.repository.create(student);
     if(result){
-      let response = new StudentResponse(result.uuid, result.name, result.email, result.tutor, result.subjects);
+      let response = new StudentResponse(result.uuid, result.name, result.email, result.tutor, result.subjects, result.lastname);
       return new BaseResponse(response, "Student created successfully", true, 200);
     }else{
         return new BaseResponse(null, "Error creating student", false, 500);

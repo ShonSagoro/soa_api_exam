@@ -18,6 +18,8 @@ export class MongoSubjectRepository implements SubjectInterface {
                 result = await this.findByUUID(uuidSubject);
                 if (result) {
                     let subject = new Subject(result.name, result.description);
+                    subject.uuid = result.uuid;
+                    subject.students = result.students;
                     return Promise.resolve(subject);
                 }
                 return Promise.resolve(result);
@@ -41,7 +43,9 @@ export class MongoSubjectRepository implements SubjectInterface {
         try {
             let subject_exist = await this.findByUUID(uuid);
             if (subject_exist) {
+                subject.students = subject_exist.students;
                 this.collection.updateOne({ uuid: uuid }, { $set: subject });
+                subject.uuid = uuid;
                 return Promise.resolve(subject);
             } else {
                 return Promise.resolve(null);
@@ -65,6 +69,8 @@ export class MongoSubjectRepository implements SubjectInterface {
             const result = await this.collection.findOne({ uuid });
             if (result) {
                 let subject = new Subject(result.name, result.description);
+                subject.uuid = result.uuid;
+                subject.students = result.students;
                 return subject;
             }
             return Promise.resolve(null);
@@ -80,6 +86,7 @@ export class MongoSubjectRepository implements SubjectInterface {
                 return result.map((element: any) => {
                     let subject = new Subject(element.name, element.description);
                     subject.uuid = element.uuid;
+                    subject.students = element.students;
                     return subject;
                 });
             }
@@ -97,6 +104,7 @@ export class MongoSubjectRepository implements SubjectInterface {
                 return result.map((element: any) => {
                     let subject = new Subject(element.name, element.description);
                     subject.uuid = element.uuid;
+                    subject.students = element.students;
                     return subject;
                 });
             }

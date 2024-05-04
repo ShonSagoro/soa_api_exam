@@ -2,7 +2,6 @@ import { Collection } from "mongodb";
 import { TutorInterface } from "../../domain/ports/TutorInterface";
 import { Tutor } from "../../domain/entities/Tutors";
 import { connect } from "../../../databases/mongodb";
-import { request } from "http";
 
 export class MongoTutorRepository implements TutorInterface {
     private collection!: Collection | any;
@@ -10,7 +9,7 @@ export class MongoTutorRepository implements TutorInterface {
     constructor() {
         this.initializeCollection();
     }
-
+// 9095a7f9-d517-4bd1-af62-247796d572dc
     async addStudentToTutor(uuidTutor: string, uuidStudent: string): Promise<Tutor | null> {
         try {
             let result = await this.findByUUID(uuidTutor);
@@ -19,12 +18,15 @@ export class MongoTutorRepository implements TutorInterface {
                 result = await this.findByUUID(uuidTutor);
                 if (result) {
                     let tutor = new Tutor(result.name, result.lastname, result.email);
+                    tutor.uuid = result.uuid;
+                    tutor.students = result.students;
                     return Promise.resolve(tutor);
                 }
                 return Promise.resolve(result);
             }
             return Promise.resolve(null);
         } catch (error) {
+            console.log(error);
             return Promise.resolve(null);
         }
     }
@@ -42,6 +44,7 @@ export class MongoTutorRepository implements TutorInterface {
         try {
             let tutor_exist = await this.findByUUID(uuid);
             if (tutor_exist) {
+                tutor.students = tutor_exist.students;
                 this.collection.updateOne({ uuid: uuid }, { $set: tutor });
                 return Promise.resolve(tutor);
             } else {
@@ -66,6 +69,8 @@ export class MongoTutorRepository implements TutorInterface {
             const result = await this.collection.findOne({ uuid });
             if (result) {
                 let tutor = new Tutor(result.name, result.lastname, result.email);
+                tutor.uuid = result.uuid;
+                tutor.students = result.students;
                 return tutor;
             }
             return Promise.resolve(null);
@@ -81,6 +86,7 @@ export class MongoTutorRepository implements TutorInterface {
                 return result.map((element: any) => {
                     let tutor = new Tutor(element.name, element.lastname, element.email);
                     tutor.uuid = element.uuid;
+                    tutor.students = element.students;
                     return tutor;
                 });
             }

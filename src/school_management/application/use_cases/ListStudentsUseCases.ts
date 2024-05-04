@@ -8,7 +8,7 @@ export class ListStudentsUseCases {
     async execute(): Promise<BaseResponse> {
         let result = await this.repository.list();
         if (result) {
-            let response = result.map(student => new StudentResponse(student.uuid, student.name, student.email, student.tutor, student.subjects));
+            let response = result.map(student => new StudentResponse(student.uuid, student.name, student.email, student.tutor, student.subjects, student.lastname));
             return new BaseResponse(response, "Students listed successfully", true, 200);
         } else {
             return new BaseResponse(null, "Error listing students", false, 500);

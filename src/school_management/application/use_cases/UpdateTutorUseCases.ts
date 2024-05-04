@@ -9,6 +9,7 @@ export class UpdateTutorUseCases{
 
     async execute(uuid:string, request: UpdateTutorRequest): Promise<BaseResponse> {
         let tutor = new Tutor(request.name, request.lastname, request.email);
+        tutor.uuid = uuid;
         let result = await this.repository.update(uuid, tutor);
         if(result){
             let response = new TutorResponse(result.uuid, result.name, result.lastname, result.email, result.students);

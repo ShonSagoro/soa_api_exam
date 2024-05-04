@@ -40,8 +40,10 @@ export class MongoStudentRepository implements StudentInterface {
 
     async update(uuid: string, student: Student): Promise<Student | null> {
         try {
-            let subject_exist = await this.findByUUID(uuid);
-            if (subject_exist) {
+            let student_exist = await this.findByUUID(uuid);
+            if (student_exist) {
+                student.subjects = student_exist.subjects;
+                student.tutor = student_exist.tutor;
                 this.collection.updateOne({ uuid: uuid }, { $set: student });
                 return Promise.resolve(student);
             } else {
@@ -65,7 +67,7 @@ export class MongoStudentRepository implements StudentInterface {
         try {
             const result = await this.collection.findOne({ uuid });
             if (result) {
-                let subject = new Student(result.name, result.email);
+                let subject = new Student(result.name, result.email, result.lastname);
                 subject.uuid = result.uuid;
                 subject.tutor = result.tutor;
                 subject.subjects = result.subjects;
@@ -82,7 +84,7 @@ export class MongoStudentRepository implements StudentInterface {
             const result = await this.collection.find({ tutor: uuidTutor }).toArray();
             if (result) {
                 return result.map((element: any) => {
-                    let tutor = new Student(element.name, element.email);
+                    let tutor = new Student(element.name, element.email, element.lastname);
                     tutor.uuid = element.uuid;
                     tutor.tutor = element.tutor;
                     tutor.subjects = element.subjects;
@@ -100,7 +102,7 @@ export class MongoStudentRepository implements StudentInterface {
             const result = await this.collection.find().toArray();
             if (result) {
                 return result.map((element: any) => {
-                    let tutor = new Student(element.name, element.email);
+                    let tutor = new Student(element.name, element.email, element.lastname);
                     tutor.tutor = element.tutor;
                     tutor.subjects = element.subjects;
                     tutor.uuid = element.uuid;
@@ -120,11 +122,12 @@ export class MongoStudentRepository implements StudentInterface {
                 await this.collection.updateOne({ uuid: uuidStudent }, { $addToSet: { subjects: uuidSubject } });
                 result = await this.findByUUID(uuidStudent);
                 if (result) {
-                    let student = new Student(result.name, result.email);
+                    let student = new Student(result.name, result.email, result.lastname);
                     student.uuid = result.uuid;
                     student.tutor = result.tutor;
                     student.subjects = result.subjects;
-                    this.subjectRepository.addStudentToSubject(uuidSubject, uuidStudent);
+                    let r =await this.subjectRepository.addStudentToSubject(uuidSubject, uuidStudent);
+                    console.log(r);
                     return Promise.resolve(student);
                 }
                 return Promise.resolve(result);
@@ -139,14 +142,14 @@ export class MongoStudentRepository implements StudentInterface {
         try {
             let result = await this.findByUUID(uuidStudent);
             if (result) {
-                await this.collection.updateOne({ uuid: uuidStudent }, { tutor: uuidTutor });
-                result = await this.findByUUID(uuidStudent);
+                await this.collection.updateOne({ uuid: uuidStudent }, { $set: { tutor: uuidTutor } });
                 if (result) {
-                    let student = new Student(result.name, result.email);
+                    let student = new Student(result.name, result.email, result.lastname);
                     student.uuid = result.uuid;
-                    student.tutor = result.tutor;
+                    student.tutor = uuidTutor;
                     student.subjects = result.subjects;
-                    this.tutorRepository.addStudentToTutor(uuidTutor, uuidStudent);
+                    let r = await this.tutorRepository.addStudentToTutor(uuidTutor, uuidStudent);
+                    console.log(r);
                     return Promise.resolve(student);
                 }
                 return Promise.resolve(result);

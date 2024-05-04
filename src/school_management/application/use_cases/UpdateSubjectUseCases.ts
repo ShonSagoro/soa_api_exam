@@ -9,6 +9,7 @@ export class UpdateSubjectUseCases {
 
     async execute(uuid:string, request: UpdateSubjectRequest): Promise<BaseResponse> {
         let student = new Subject(request.name, request.description);
+        student.uuid = uuid;
         let result = await this.repository.update(uuid, student);
         if (result) {
             let response = new SubjectResponse(result.uuid, result.name, result.description, result.students);
