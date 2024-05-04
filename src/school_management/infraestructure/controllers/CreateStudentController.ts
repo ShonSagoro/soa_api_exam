@@ -9,7 +9,7 @@ export class CreateStudentController{
 
     async execute(req: Request, res: Response){
         const data = req.body;
-        const request = new CreateStudentRequest(data.name, data.email);
+        const request = new CreateStudentRequest(data.name, data.email, data.lastname);
         try{
             const baseResponse = await this.useCase.execute(request);
             res.status(baseResponse.statusCode).json(baseResponse);

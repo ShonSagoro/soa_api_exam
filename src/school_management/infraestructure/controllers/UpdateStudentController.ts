@@ -10,7 +10,7 @@ export class UpdateStudentController{
     async execute(req: Request, res: Response){
         const data = req.body;
         const uuid = req.params.uuid;
-        const request = new UpdateStudentRequest(data.name, data.email, data.tutor);
+        const request = new UpdateStudentRequest(data.name, data.email, data.tutor, data.lastname);
         try{
             const baseResponse = await this.useCase.execute(uuid,request);
             res.status(baseResponse.statusCode).json(baseResponse);
